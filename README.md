@@ -1,0 +1,4 @@
+tietokanta
+==========
+
+Tietokantasovellus-harjoitustyön kansio
