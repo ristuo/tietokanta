@@ -1,0 +1,33 @@
+\documentclass[a4paper]{article}
+\usepackage[finnish]{babel}
+\usepackage[utf8]{inputenc}
+\title{Tietokantasovelluksen dokumentaatio}
+\author{Risto Tuomainen}
+\begin{document}
+\maketitle
+\subsection*{Johdanto}
+\noindent
+Painonnostotietokanta sisältää tietoja kilpailuista ja niissä tehdyistä suorituksista. Tietokannan avulla voi seurata yksittäisten kilpailijoiden menestymistä, kaikkien kilpailijoiden keskimääräisiä tuloksia tai esim. kauden aikana tehtyjä parhaita tuloksia. Rekisteröityneet käyttäjät voivat päivittää tietokantaan tuloksia, ja lisäksi kaikki internetin käyttäjät voivat käydä lukemassa tietokannan sisältöjä. 
+
+Tietokanta toteutetaan laitoksen users-palvelimella Apache-palvelimen alla. Tietokantana käytetään Postgres-tietokantaa, ja ohjelmointikielenä php:tä. Työ saattaa hyvinkin toimia suoraan myös jollakin muulla tietokannalla, mutta sitä on vaikea tässä vaiheessa sanoa, enkä toisaalta ole aivan selville postgresinkään ominaispiirteitäst. Käyttäjän selaimen ei tarvinne tukea mitään ohjelmointikieltä.
+\subsection*{Käyttötapaukset}
+Käyttäjiä on kahdenlaisia, lukijoita ja rekisteröityneitä käyttäjiä. Tietysti voisi mikäli aikaa jää, erilaisten käyttäjien oikeuksia voi jaotella hienostuneemminkin esim. varsinaisiin ylläpitäjiin ja henkilöihin, jotka saavat lisätä uusia tuloksia. Tässä vaiheessa kuitenkin keskitytään olennaiseen.
+\begin{itemize}
+	\item{Lukijan käyttötapauksia:}
+	\begin{itemize}
+		\item{Kunkin kauden parhaiden tulosten haku tietokannasta}
+		\item{Nostajan tietojen katselu, ts. kilpailut ja niissä tehdyt suoritukset}
+	\end{itemize}
+	\item{Rekisteröityneen käyttäjän käyttötapauksia}
+	\begin{itemize}
+		\item{Uuden nostajan lisääminen tietokantaan}
+		\item{Kilpailun tai yksittäisten suorituksen lisääminen tietokantaan}
+		\item{Tietokannan tietojen muokkaaminen}
+		\item{Rekisteröityminen}
+		\item{Kirjautuminen}
+	\end{itemize}
+\end{itemize}
+
+
+
+\end{document}
