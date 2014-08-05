@@ -1,0 +1,10 @@
+p {
+    max-width:600px;
+}
+a:link {
+    color: blue;
+}
+a:visited {
+    color: blueviolet;
+}
+
