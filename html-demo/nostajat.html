@@ -9,8 +9,49 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/bootstrap.css" rel="stylesheet">
+        <link href="../css/bootstrap-theme.css" rel="stylesheet">
+        <link href="../css/main.css" rel="stylesheet">        
     </head>
     <body>
-        <div>TODO write content</div>
+        <ul class="nav nav-tabs">
+                <li class="active"> <a href="index.html"> etusivu </a></li>
+                <li class="active"> <a href="kirjautuminen.html"> kirjaudu </a></li>
+                <li class="active"> <a href="kilpailu.html"> kilpailut </a></li>
+                <li class="active"> <a href="nostajat.html"> nostajat </a></li>
+
+        </ul>        
+        <div class="container">
+            <h1>Kaikki tietokannassa olevat kilpailijat</h1>
+            <form class="form-horizontal" role="form" action="lomake.html" method="POST">
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input type="email" class="form-control" id="inputEmail1" name="email" placeholder="Hae nostajaa nimellä">
+                    </div>  
+                </div>
+            </form>
+            
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nimi</th>
+                        <th>Sukupuoli</th>
+                        <th>Seura</th>
+                        <th>Kansallisuus</th>
+                        <th>Viimeisin kilpailu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="nostajansivu.html">Matti Meikäläinen</a></td>
+                        <td>Mies</td>
+                        <td>Rovaniemen Reipas</td>
+                        <td>Suomi</td>
+                        <td>Herakleen kuukausikisat 3.6.2014</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+        </div>
     </body>
 </html>
