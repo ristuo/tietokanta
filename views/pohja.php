@@ -13,7 +13,7 @@
     <body>
         <ul class="nav nav-tabs">
             <li class="active"> <a href="index.php"> etusivu </a></li>
-            <li class="active"> <a href="kilpailu.html"> kilpailut </a></li>
+            <li class="active"> <a href="kilpailut.php"> kilpailut </a></li>
             <li class="active"> <a href="nostajat.php"> nostajat </a></li>
             <?php if (!onkoKirjauduttu()) { echo '<li class="active"> <a href="login.php"> kirjaudu </a></li>';} ?>
             <?php if (onkoKirjauduttu()) { echo '<li class="active"> <a href="paivita.php"> Päivitä kisatuloksia </a></li>';} ?>

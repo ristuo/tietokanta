@@ -1,8 +1,14 @@
 <?php
+
 require "libs/common.php";
 require "models/nostaja.php";
-$nostajat = haeKaikkiNostajat();
-$miehet = haeSukupuolenPerusteella('mies');
-$naiset = haeSukupuolenPerusteella('nainen');
+require 'libs/tietokantayhteys.php';
+
+
+$nostajat = nostaja::haeKaikkiNostajat();
+$miehet = nostaja::haeSukupuolenPerusteella('mies');
+$naiset = nostaja::haeSukupuolenPerusteella('nainen');
+
+
 naytaNakyma('nostajat', array('nostajat'=>  $nostajat, 'miehet' => $miehet, 'naiset'=>$naiset));
 

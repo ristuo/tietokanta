@@ -1,6 +1,7 @@
 <div class="container">
     <h1>Tietokannassa olevat nostajat</h1>
     <h2>Miehet</h2>
+    <?php if ($data[miehet] != null) : ?>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -11,16 +12,18 @@
             </tr>
         </thead>
         <tbody>
-            <?php if (empty($data[miehet])) {
+            
+    <?php endif; ?>       
+            <?php if ($data[miehet] == null) {
                 echo 'Tietokannassa ei ole yhtään miesten sarjassa kilpailevaa nostajaa';
             }
             else { foreach($data[miehet] as $nostaja) {
             
                 echo '<tr>';                
-                echo '<td><a href=yksinostaja.php?hnro='.$nostaja->hnro.'>'.$nostaja->nimi.'</a></td>';
-                echo '<td>'.$nostaja->kansallisuus.'</td>';
-                echo '<td>'.$nostaja->syntymavuosi.'</td>';
-                echo '<td>'.$nostaja->seura.'</td>';
+                echo '<td><a href=yksinostaja.php?hnro='.$nostaja->getHnro().'>'.$nostaja->getNimi().'</a></td>';
+                echo '<td>'.$nostaja->getKansallisuus().'</td>';
+                echo '<td>'.$nostaja->getSvuosi().'</td>';
+                echo '<td>'.$nostaja->getSeura().'</td>';
                 echo '</tr>';
                 
                 }
@@ -40,16 +43,17 @@
             </tr>
         </thead>
         <tbody>
-            <?php if (empty($data[naiset])){
+            <?php if ($data[naiset] == null){
                     echo 'Tietokannassa ei ole yhtään naisten sarjassa kilpailevaa nostajaa';
             }
-            else foreach($data[naiset] as $nostaja) {
+            else { foreach($data[naiset] as $nostaja) {
                 echo '<tr>';
-                    echo '<td>'.$nostaja->nimi.'</td>';
-                    echo '<td>'.$nostaja->kansalaisuus.'</td>';
-                    echo '<td>'.$nostaja->syntymavuosi.'</td>';
-                    echo '<td>'.$nostaja->seura.'</td>';
+                    echo '<td><a href=yksinostaja.php?hnro='.$nostaja->getHnro().'>'.$nostaja->getNimi().'</a></td>';
+                    echo '<td>'.$nostaja->getKansalaisuus().'</td>';
+                    echo '<td>'.$nostaja->getSvuosi().'</td>';
+                    echo '<td>'.$nostaja->getSeura().'</td>';
                 echo '</tr>';
+                }
             }
             ?>
         </tbody>
