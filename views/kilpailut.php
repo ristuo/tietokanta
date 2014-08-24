@@ -18,7 +18,7 @@
             <?php foreach($data[kilpailut] as $kilpailu) {
                 
                 echo '<tr>';
-                echo '<td>'.$kilpailu->getNimi().'</td>';
+                echo '<td><a href= yksikilpailu.php?kilnro='.$kilpailu->getKilnro().'>'.$kilpailu->getNimi().'</a></td>';
                 echo "<td>".$kilpailu->getTaso()."</td>";
                 echo "<td>".$kilpailu->getPaivamaara()."</td>";
                 echo "<td>".$kilpailu->getPaikka()."</td>";

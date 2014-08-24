@@ -1,5 +1,8 @@
 <div class="container">
     <h1><?php echo $data[nostaja]->getNimi(); ?></h1>
+    <p>Syntymäpäivä: <?php echo $data['nostaja']->getSvuosi() ?></p>
+    <p>Seura: <?php echo $data['nostaja']->getSeura() ?></p>
+    <p>Kansallisuus: <?php echo $data['nostaja']->getKansallisuus() ?></p>
     <h2>Kilpailijan kaikki nostot</h2>
     
     <?php if ($data[tempaukset] == null) : ?>

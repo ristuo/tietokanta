@@ -20,8 +20,10 @@
             <?php if (onkoKirjauduttu()) { echo '<li class="active"> <a href="logout.php"> Kirjaudu ulos </a></li>';} ?>
         
         </ul>
-        <?php if (!empty($data[virhe])): ?>
-            <div class="alert alert-danger"><?php echo $data[virhe]; ?></div>
+        <?php if (!empty($data['virhe'])): ?>
+            <?php foreach($data['virhe'] as $virhe) : ?>
+            <div class="alert alert-danger"><?php echo $virhe; ?></div>
+            <?php endforeach; ?>
         <?php endif; ?>
         <?php require 'views/'.$sivu.'.php'; ?>
     </body>

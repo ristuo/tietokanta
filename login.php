@@ -2,12 +2,10 @@
 require 'libs/common.php';
 require 'models/kayttaja.php';
 
-naytaNakyma('login');
-exit();
 
 if (empty($_POST["email"]) && empty($_POST["password"])) {
     naytaNakyma('login' /*,array('virhe' => 'Et antanut käyttäjätunnusta etkä salasanaa!')*/);
-    exit();
+
     
 }
 
@@ -30,7 +28,7 @@ $kayttaja = kayttaja::haeKayttajaTunnuksilla($sposti, $passu);
 
 if (!($kayttaja==null)) {
     $_SESSION['kayttaja']= $sposti;
-    naytaNakyma('testi');
+    naytaNakyma('etusivu');
 }
 
 else {
