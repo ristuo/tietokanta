@@ -15,9 +15,9 @@
             <input type="text" class="form-control" id="inputseura" name="seura" placeholder='Joku seura'>
         </div>
         
-        <label for="inputsyntymapaiva" class="col-md-2 control-label">Syntymäpäivä</label>
+        <label for="inputsyntyvuosi" class="col-md-2 control-label">Syntymävuosi</label>
         <div class="col-md-10">
-            <input type="date" class="form-control" id="inputsyntymapaiva" name="syntymapaiva" placeholder='YYYY-MM-DD, esim. 1989-11-25'>
+            <input type="date" class="form-control" id="inputsyntymavuosi" name="syntymavuosi" placeholder='Esim. 1989'>
         </div>
         
         <label for="inputkansalaisuus" class="col-md-2 control-label">Kansalaisuus</label>

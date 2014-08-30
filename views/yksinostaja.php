@@ -5,6 +5,7 @@
     <p>Kansallisuus: <?php echo $data['nostaja']->getKansallisuus() ?></p>
     <h2>Kilpailijan kaikki nostot</h2>
     
+    
     <?php if ($data[tempaukset] == null) : ?>
         <p> Kilpailija ei ole osallistunut yhteenkään kilpailuun </p>
     <?php endif; ?>
@@ -22,12 +23,12 @@
                 </thead>
            
                 <tbody>
-            <?php foreach($data[tempaukset] as $tempaus) {
+            <?php foreach($data[tempaukset] as $tempausTulokset) {
                 echo "<tr>";
-                echo "<td>".$tempaus->getTulos()."</td>";
-                echo "<td>".$tempaus->getPainoluokka()."</td>";
-                echo "<td>".$tempaus->getKilpailunnimi()."</td>";
-                echo "<td>".$tempaus->getJarjestysnumero()."</td>";
+                echo "<td>".$tempausTulokset->getTulos()."</td>";
+                echo "<td>".$tempausTulokset->getPainoluokka()."</td>";
+                echo "<td>".$tempausTulokset->getKilpailunnimi()."</td>";
+                echo "<td>".$tempausTulokset->getJarjestysnumero()."</td>";
                 echo "</tr>";
             } ?>
                 </tbody>
@@ -49,12 +50,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($data[tyonnot] as $tyonto){
+                    <?php foreach($data[tyonnot] as $tyontoTulokset){
                         echo "<tr>";
-                        echo "<td>".$tyonto->getTulos()."</td>";
-                        echo "<td>".$tyonto->getPainoluokka()."</td>";
-                        echo "<td>".$tyonto->getKilpailunnimi()."</td>";
-                        echo "<td>".$tyonto->getJarjestysnumero()."</td>";
+                        echo "<td>".$tyontoTulokset->getTulos()."</td>";
+                        echo "<td>".$tyontoTulokset->getPainoluokka()."</td>";
+                        echo "<td>".$tyontoTulokset->getKilpailunnimi()."</td>";
+                        echo "<td>".$tyontoTulokset->getJarjestysnumero()."</td>";
                         echo "</tr>";    
                     }
                     ?>

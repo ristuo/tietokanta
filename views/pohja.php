@@ -16,7 +16,7 @@
             <li class="active"> <a href="kilpailut.php"> kilpailut </a></li>
             <li class="active"> <a href="nostajat.php"> nostajat </a></li>
             <?php if (!onkoKirjauduttu()) { echo '<li class="active"> <a href="login.php"> kirjaudu </a></li>';} ?>
-            <?php if (onkoKirjauduttu()) { echo '<li class="active"> <a href="paivita.php"> Päivitä kisatuloksia </a></li>';} ?>
+            <?php if (onkoKirjauduttu()) { echo '<li class="active"> <a href="lisaaTuloksia.php"> Päivitä kisatuloksia </a></li>';} ?>
             <?php if (onkoKirjauduttu()) { echo '<li class="active"> <a href="logout.php"> Kirjaudu ulos </a></li>';} ?>
         
         </ul>
@@ -25,7 +25,16 @@
             <div class="alert alert-danger"><?php echo $virhe; ?></div>
             <?php endforeach; ?>
         <?php endif; ?>
+        <?php if (!empty($data['onnistuminen'])) : ?>
+            <div class="alert alert-success"><?php echo $data['onnistuminen'] ?></div>    
+        <?php endif; ?>
+        <?php if (!empty($_SESSION['ilmoitus'])) : ?>
+            <div class="alert alert-success">
+                <?php echo $_SESSION['ilmoitus']; unset($_SESSION['ilmoitus']); ?>
+            </div>
+        <?php endif; ?>    
         <?php require 'views/'.$sivu.'.php'; ?>
+            
     </body>
     </head>
 </html>

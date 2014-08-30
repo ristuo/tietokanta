@@ -100,5 +100,21 @@ class nosto {
         return $palautettava;
     }
     
+    public function lisaaKantaan() {
+        if ($this->getTulos()!=null) {
+        $sql = "INSERT INTO nosto(hnro, laji, tulos, kilnro, painoluokka,jarjestysnumero)"
+                . "VALUES(".$this->getHnro().",'".$this->getLaji()."',".$this->getTulos().",".$this->getKilnro().",'".$this->getPainoluokka()
+                ."',".$this->getJarjestysnumero().")";
+        }
+        else {
+            $sql = "INSERT INTO nosto(hnro, laji, tulos, kilnro, painoluokka,jarjestysnumero)"
+                . "VALUES(".$this->getHnro().",'".$this->getLaji()."',null,".$this->getKilnro().",'".$this->getPainoluokka()
+                ."',".$this->getJarjestysnumero().")";
+        }
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $kysely->execute();
+    }
+    
+   
     
 }

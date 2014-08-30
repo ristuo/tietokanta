@@ -12,7 +12,7 @@
     <?php endif; ?>
     <?php if (!$data['hakutehty']) : ?>
     <h2>Miehet</h2>
-    <?php if ($data['miehet'] != null) : ?>
+    <?php if (!empty($data['miehet'])) : ?>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -27,7 +27,7 @@
             
             
     <?php endif; ?>       
-            <?php if ($data['miehet'] == null) {
+            <?php if (empty($data['miehet'])) {
                 echo 'Tietokannassa ei ole yhtään miesten sarjassa kilpailevaa nostajaa';
             }
             else { foreach($data['miehet'] as $nostaja) {

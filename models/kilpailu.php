@@ -67,9 +67,52 @@ class kilpailu {
         $palautettava->setPaikka($tulos->paikka);
         $palautettava->setTaso($tulos->taso);
         $palautettava->setPaivamaara($tulos->paivamaara);
+        $palautettava->setKilnro($tulos->kilnro);
         return $palautettava;
 
     }
+ 
+    public function lisaaKantaan() {
+        $sql = "INSERT INTO kilpailu(nimi,paivamaara,taso,paikka) VALUES(?,?,?,?) RETURNING kilnro";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $ok = $kysely->execute(array($this->getNimi(),$this->getPaivamaara(),$this->getTaso(),$this->getPaikka()));
+        if ($ok) {
+            $this->hnro = $kysely->fetchColumn();
+        }
+        return $ok;
+    }
+    
+    public static function haeKaikkiNimet() {
+        $sql = "SELECT kilnro, nimi FROM kilpailu";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $kysely->execute();
+        return $kysely->fetchAll(PDO::FETCH_OBJ);
+    }
+    
+    public function poista() {
+        $sql = "DELETE FROM kilpailu WHERE kilnro = ?";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $kysely->execute(array($this->getKilnro()));
+    }
+    
+    public function haeTuloksetPainoluokassa($painoluokka, $sarja) {
+
+        $sql = "select yt, tulokset.hnro, sukupuoli from (select te.tulos+ty.tulos as yt, te.hnro from (select max(tulos) as tulos, hnro from nosto where"
+                . " kilnro = ".$this->getKilnro()." and laji='tempaus' and "
+                . "painoluokka='".$painoluokka."' group by hnro) as te inner join "
+                . " (select max(tulos) as tulos, hnro from nosto where kilnro = ".$this->getKilnro(). " "
+                . "and painoluokka='".$painoluokka."' and laji='tyonto'"
+                . " group by hnro) as ty on (ty.hnro = te.hnro)) as tulokset inner join "
+                . "nostaja on (tulokset.hnro = nostaja.hnro and sukupuoli='".$sarja."') order by yt ";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $kysely->execute();
+    }
+        
+        
+        
+        
+    
+    
     
 }
 

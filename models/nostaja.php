@@ -5,7 +5,7 @@ class nostaja {
     private $nimi;
     private $kansallisuus;
     private $seura;
-    private $syntymavuosi;
+    private $svuosi;
     private $sukupuoli;
     private $hnro;
     private $virheet;
@@ -104,7 +104,7 @@ class nostaja {
     }
     
     public static function haeKaikkiNostajat() {
-        $sql = "select hnro, nimi, kansalaisuus, seura, extract(year from syntymapaiva) as syntymavuosi, sukupuoli from nostaja";
+        $sql = "select hnro, nimi, kansalaisuus, seura, syntymavuosi, sukupuoli from nostaja";
         $tulos = nostaja::toteutaKysely($sql); 
         if ($tulos==null) {
             return null;
@@ -134,8 +134,7 @@ class nostaja {
     }
 
     public static function haeSukupuolenPerusteella($sukupuoli) {
-        $sql = "select hnro, nimi, kansalaisuus, seura, sukupuoli, extract(year from syntymapaiva)"
-                . " as syntymavuosi from nostaja where sukupuoli = '".$sukupuoli."'";
+        $sql = "select hnro, nimi, kansalaisuus, seura, sukupuoli, syntymavuosi from nostaja where sukupuoli = '".$sukupuoli."'";
         $tulos = nostaja::toteutaKysely($sql);
         if ($tulos==null){
             return null;
@@ -149,7 +148,7 @@ class nostaja {
 
     public static function haeNostajaNumerolla($hnro) {
         $sql = "select hnro, nimi, kansalaisuus,"
-                . " seura, extract(year from syntymapaiva) as syntymavuosi,"
+                . " seura, syntymavuosi,"
                 . " sukupuoli from nostaja where hnro =".$hnro ."LIMIT 1";
         $kysely = getTietokantayhteys()->prepare($sql);
         $kysely->execute();
@@ -171,7 +170,7 @@ class nostaja {
     }
     
     public function lisaaNostaja() {
-        $sql = "INSERT INTO nostaja(nimi, kansalaisuus, syntymapaiva, sukupuoli, seura) VALUES(?,?,?,?,?)"
+        $sql = "INSERT INTO nostaja(nimi, kansalaisuus, syntymavuosi, sukupuoli, seura) VALUES(?,?,?,?,?)"
                 . " RETURNING hnro";
         $kysely = getTietokantayhteys()->prepare($sql);
         
@@ -181,7 +180,7 @@ class nostaja {
         if ($ok) {
             $this->hnro = $kysely->FetchColumn();
         }
-        return $this->hnro;
+        return $ok;
     }
                 
     public function getVirheet() {
@@ -206,7 +205,7 @@ class nostaja {
     
     public static function haeNostajatNimella($nimi) {
         $sql = "select hnro, nimi, kansalaisuus,"
-                . " seura, extract(year from syntymapaiva) as syntymavuosi,"
+                . " seura, syntymavuosi,"
                 . " sukupuoli from nostaja where nimi = ?";
         $kysely = getTietokantayhteys()->prepare($sql);
         $kysely->execute(array($nimi));
@@ -218,7 +217,7 @@ class nostaja {
     }
 
     public function muokkaa() {
-        $sql = "UPDATE nostaja SET nimi = ?, kansalaisuus = ?, syntymapaiva = ?, seura = ?, sukupuoli = ?"
+        $sql = "UPDATE nostaja SET nimi = ?, kansalaisuus = ?, syntymavuosi = ?, seura = ?, sukupuoli = ?"
                 . "WHERE hnro = ? ";
         $kysely = getTietokantayhteys()->prepare($sql);
         $tiedot = array($this->getNimi(), $this->getKansallisuus(), $this->getSvuosi(), $this->getSeura(), $this->getSukupuoli(), $this->getHnro());
@@ -232,5 +231,16 @@ class nostaja {
         $tiedot = array($this->getHnro());
         $kysely->execute($tiedot);
     }    
+    
+    public static function haeKaikkiNimet() {
+        $sql = "SELECT nimi, hnro FROM nostaja";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $kysely->execute();
+        $tulos = $kysely->fetchAll(PDO::FETCH_OBJ);
         
+  
+        return $tulos;
+    }
+        
+
 }

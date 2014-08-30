@@ -1,7 +1,5 @@
 
-<?php $muokattavanostaja = nostaja::haeNostajaNumerolla($data['nostajanid']) ?>
-
-
+<?php $muokattavanostaja = $data['nostaja']; ?>
 <div class="container">
 <h1>Muokkaa nostajan <?php echo $muokattavanostaja->getNimi(); ?> tietoja</h1>
 <form class="form-horizontal" role="form" action="muokkaaNostajaa.php" method="POST">
@@ -18,9 +16,9 @@
             <input type="text" class="form-control" id="inputseura" name="seura" value='<?php echo $muokattavanostaja->getSeura() ?>'>
         </div>
         
-        <label for="inputsyntymapaiva" class="col-md-2 control-label">Syntymäpäivä</label>
+        <label for="inputsyntymavuosi" class="col-md-2 control-label">Syntymävuosi</label>
         <div class="col-md-10">
-            <input type="date" class="form-control" id="inputsyntymapaiva" name="syntymapaiva" value='<?php echo $muokattavanostaja->getSvuosi() ?>'>
+            <input type="date" class="form-control" id="inputsyntymavuosi" name="syntymavuosi" value='<?php echo $muokattavanostaja->getSvuosi() ?>'>
         </div>
         
         <label for="inputkansalaisuus" class="col-md-2 control-label">Kansalaisuus</label>
