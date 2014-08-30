@@ -1,5 +1,5 @@
 <?php
-require "libs/tietokantayhteys1.php";
+require "libs/tietokantayhteys.php";
 require "models/kilpailu.php";
 require "libs/common.php";
 

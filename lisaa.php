@@ -9,7 +9,7 @@ if (!onkoKirjauduttu()){
     
 }
 
-if (empty($_POST['nimi']) && empty($_POST['seura']) && empty($_POST['kansallisuus']) && empty($_POST['syntymapaiva'])) {
+if (empty($_POST['nimi']) && empty($_POST['seura']) && empty($_POST['kansallisuus']) && empty($_POST['syntymavuosi'])) {
     naytaNakyma('lisaa');
 }
 
@@ -18,7 +18,7 @@ $lisattava->setNimi($_POST['nimi']);
 $lisattava->setSeura($_POST['seura']);
 $lisattava->setKansallisuus($_POST['kansallisuus']);
 $lisattava->setSukupuoli($_POST['sukupuoli']);
-$lisattava->setSvuosi($_POST['syntymapaiva']);
+$lisattava->setSvuosi($_POST['syntymavuosi']);
 
 /*
 naytaNakyma('lisaa', array( 'virhe'=>$lisattava->getNimi().$lisattava->getSeura().$lisattava->getSvuosi().$lisattava->getSukupuoli().$lisattava->getKansallisuus()));
@@ -28,7 +28,7 @@ if (!$lisattava->onkoKelvollinen()) {
 }
 else {
     $lisattava->lisaaNostaja();
+    $_SESSION['ilmoitus']="Lisääminen onnistui!";
     header('Location: nostajat.php');
     exit();
 }
-$id = $lisattava->lisaaNostaja();

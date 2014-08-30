@@ -5,11 +5,11 @@ require 'libs/tietokantayhteys.php';
 
 $nostajanid = (int)$_POST['hnro'];
 $uudettiedot = new nostaja();
+$muokattavanostaja = nostaja::haeNostajaNumerolla($nostajanid);
 
 //naytaNakyma('testi', array('virhe'=>array('virhe3'=>$uudettiedot->getHnro())));
-
 if (empty($_POST['nimi'])) {
-    naytaNakyma('muokkaaNostajaa', array('nostajanid'=>$nostajanid));
+    naytaNakyma('muokkaaNostajaa', array('nostaja'=>$muokattavanostaja));
 }
 
 
@@ -17,18 +17,9 @@ $uudettiedot->setHnro($nostajanid);
 $uudettiedot->setNimi($_POST['nimi']);
 $uudettiedot->setSeura($_POST['seura']);
 $uudettiedot->setSukupuoli($_POST['sukupuoli']);
-$uudettiedot->setSvuosi($_POST['syntymapaiva']);
+$uudettiedot->setSvuosi($_POST['syntymavuosi']);
 $uudettiedot->setKansallisuus($_POST['kansallisuus']);
 $uudettiedot->muokkaa();
-/*
-$uudettiedot->setNimi('manuaalinenmuutos');
-$uudettiedot->setSeura('joku seura');
-$uudettiedot->setKansallisuus('joku');
-$uudettiedot->setSukupuoli('mies');
-$uudettiedot->setSvuosi('1989-05-05');
-$uudettiedot->muokkaa();
- * */
- 
-//naytaNakyma('testi', array('virhe'=>array('virhe'=>$uudettiedot->getNimi(), 'virhe2'=>$uudettiedot->getSeura(), 'virhe3'=>$uudettiedot->getHnro())));
 
+$_SESSION['ilmoitus']="Muokkaus onnistui!";
 header("LOCATION: nostajat.php");
