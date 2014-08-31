@@ -11,23 +11,25 @@ if (!onkoKirjauduttu()){
 
 if (empty($_POST['nimi']) && empty($_POST['seura']) && empty($_POST['kansallisuus']) && empty($_POST['syntymavuosi'])) {
     naytaNakyma('lisaa');
+    
 }
 
-$lisattava = new nostaja();
-$lisattava->setNimi($_POST['nimi']);
-$lisattava->setSeura($_POST['seura']);
-$lisattava->setKansallisuus($_POST['kansallisuus']);
-$lisattava->setSukupuoli($_POST['sukupuoli']);
-$lisattava->setSvuosi($_POST['syntymavuosi']);
+$uudettiedot = new nostaja();
+$uudettiedot->setNimi($_POST['nimi']);
+$uudettiedot->setSeura($_POST['seura']);
+$uudettiedot->setKansallisuus($_POST['kansallisuus']);
+$uudettiedot->setSukupuoli($_POST['sukupuoli']);
+$uudettiedot->setSvuosi($_POST['syntymavuosi']);
 
 /*
 naytaNakyma('lisaa', array( 'virhe'=>$lisattava->getNimi().$lisattava->getSeura().$lisattava->getSvuosi().$lisattava->getSukupuoli().$lisattava->getKansallisuus()));
 */
-if (!$lisattava->onkoKelvollinen()) {
-    naytaNakyma('lisaa', array('virhe'=>$lisattava->getVirheet())); 
+if ($uudettiedot->getVirheet()!=null) {
+    naytaNakyma('lisaa', array('virhe'=> $uudettiedot->getVirheet(), 'seura'=>$uudettiedot->getSeura(),
+        'kansallisuus'=>$uudettiedot->getKansallisuus(),'svuosi'=>$uudettiedot->getSvuosi(), 'nimi'=>$uudettiedot->getNimi())); 
 }
 else {
-    $lisattava->lisaaNostaja();
+    $uudettiedot->lisaaNostaja();
     $_SESSION['ilmoitus']="Lisääminen onnistui!";
     header('Location: nostajat.php');
     exit();

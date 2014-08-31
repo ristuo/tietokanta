@@ -10,13 +10,13 @@ if (empty($_POST["email"]) && empty($_POST["password"])) {
 }
 
 if (empty($_POST["email"]) && !empty($_POST["password"])) {
-    naytaNakyma('login', array('virhe' => 'Et antanut käyttäjätunnusta!'));
+    naytaNakyma('login', array('virhe'=>array('virhe' => 'Et antanut käyttäjätunnusta!')));
 }
 
 $sposti = $_POST["email"];
 
 if (empty($_POST['password'])) {
-    naytaNakyma('login', array('virhe' => 'Et antanut salasanaa!', 'kayttaja' => $sposti));
+    naytaNakyma('login', array('virhe'=>array('virhe' => 'Et antanut salasanaa!'),'kayttaja' => $sposti));
     
     
 }

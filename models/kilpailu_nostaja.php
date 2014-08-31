@@ -1,5 +1,4 @@
 <?php
-require 'libs/tietokantayhteys.php';
 
 class kilpailu_nostaja {
     private $hnro;

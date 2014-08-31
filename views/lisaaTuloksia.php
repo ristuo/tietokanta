@@ -8,22 +8,21 @@
         <option value="<?php echo $kilpailu->kilnro; ?>"><?php echo $kilpailu->nimi; ?></option>
     <?php endforeach; ?>
     </select>    
+    
     <label>Nostaja</label>
     <select name="hnro">
     <?php foreach(Nostaja::haeKaikkiNimet() as $nostaja): ?>
         <option value="<?php echo $nostaja->hnro; ?>"><?php echo $nostaja->nimi; ?></option>
     <?php endforeach; ?>
     </select>
+
+    <label>Painoluokka</label>
     <select name="painoluokka">
-        <option value="105+ kg">105+ kg</option>
-        <option value="105 kg">105 kg</option>
-        <option value="94 kg">94 kg</option>
-        <option value="85 kg">84 kg</option>
-        <option value="77 kg">77 kg</option>
-        <option value="69 kg">69 kg</option>
-        <option value="62 kg">62 kg</option>
-        <option value="56 kg">56 kg</option>
+    <?php foreach(getPainoluokat() as $painoluokka): ?>
+        <option value="<?php echo $painoluokka->painoluokka; ?>"><?php echo $painoluokka->painoluokka; ?></option>
+    <?php endforeach; ?>    
     </select>
+        
     <table class="table-hover">
         <tbody>
             <tr>

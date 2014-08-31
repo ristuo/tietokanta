@@ -5,8 +5,8 @@
         <label for="inputEmail1" class="col-md-2 control-label">Sähköposti</label>
         <div class="col-md-10">
           <input type="email" class="form-control" id="inputEmail1" name="email" placeholder= 
-              <?php if (!empty($data[kayttaja])) {
-                  echo $data[kayttaja];
+              <?php if (!empty($data['kayttaja'])) {
+                  echo $data['kayttaja'];
               }
                 else  echo 'Sähköposti';  ?> >
         </div>

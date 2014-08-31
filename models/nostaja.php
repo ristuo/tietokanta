@@ -21,29 +21,51 @@ class nostaja {
     }
     
     public function setNimi($nimi){
-        $this->nimi=$nimi;
         
-        if (trim($this->nimi)=='') {
+        
+        if (trim($nimi)=='') {
             $this->virheet['nimi']="Nimi ei saa olla tyhjä";
         }
         
-        if (strlen($this->nimi)>100) {
+        else if (strlen($nimi)>100) {
             $this->virheet['nimi']="Nimi voi olla enintään 100 merkkiä pitkä";
         }
+        else if (preg_match('#[0-9]#',$nimi)) {
+            $this->virheet['nimi']="Nimessä ei voi olla numeroita";
+            
+        }
         
-        if (trim($this->nimi)!='' && strlen($this->nimi<=100)) {
+        else {
             unset($this->virheet['nimi']);
+            $this->nimi=$nimi;
+            
         }
     }
     
     public function setKansallisuus($kansallisuus) {
-        $this->kansallisuus=$kansallisuus;
+        
+        if (strlen($kansallisuus)>30) {
+            $this->virheet['kansallisuus']="Kansallisuuden tulee olla alle 30 merkkiä";
+        }
+        
+        else if (preg_match('#[0-9]#',$kansallisuus)) {
+            $this->virheet['kansallisuus']="Kansallisuudessa ei voi olla numeroita";
+        }
+        
+        else {
+            $this->kansallisuus=$kansallisuus;
+            unset($this->virheet['kansallisuus']);
+        }
     }
     
     public function setSeura($seura) {
-        $this->seura=$seura;
+        
         if (strlen($this->seura)>50) {
             $this->virheet['seura']="Seuran nimi ei voi olla yli 50 merkkiä pitkä";
+        }
+        else {
+            $this->seura=$seura;
+            unset($this->virheet['seura']);
         }
     }
     
@@ -62,7 +84,15 @@ class nostaja {
             $this->svuosi = $svuosi; 
             }; 
          */
-         $this->svuosi = $svuosi;
+        
+        if (preg_match('#[A-Ö]#',$svuosi)) {
+            $this->virheet['svuosi'] = "Syntymävuoden tulee olla kokonaisluku";
+        }
+        
+        else {       
+            $this->svuosi = (int)$svuosi;
+            unset($this->virheet['svuosi']);
+        }
     }
     
     public function setHnro($hnro) {
@@ -92,6 +122,8 @@ class nostaja {
     public function getKansallisuus() {
         return $this->kansallisuus;
     }
+    
+    
 
     function toteutaKysely($sql) {
         $kysely = getTietokantayhteys()->prepare($sql);
@@ -242,5 +274,25 @@ class nostaja {
         return $tulos;
     }
         
+    public function haeKilpailut() {
+        $sql = "SELECT * FROM kilpailu WHERE kilnro in"
+                . " (select kilnro from kilpailu_nostaja where hnro = ".$this->getHnro().")";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $kysely->execute();
+        return $kysely->fetchAll(PDO::FETCH_OBJ);
+    }
 
+    
+    public function nostajanSijoitusKilpailussa($kilnro) {
+        $sql = "select yt, tulokset.hnro as hnro, sukupuoli, nostaja.nimi as nimi"
+                . " from (select te.tulos+ty.tulos as yt, te.hnro"
+                . " from (select max(tulos) as tulos, hnro from nosto where"
+                . " kilnro = ".$kilnro." and laji='tempaus' and "
+                . "painoluokka='".$painoluokka."' group by hnro) as te inner join "
+                . " (select max(tulos) as tulos, hnro from nosto where kilnro = ".$this->getKilnro(). " "
+                . "and painoluokka='".$painoluokka."' and laji='tyonto'"
+                . " group by hnro) as ty on (ty.hnro = te.hnro)) as tulokset inner join "
+                . "nostaja on (tulokset.hnro = nostaja.hnro and sukupuoli='".$sarja."') order by yt desc ";
+    }
+    
 }

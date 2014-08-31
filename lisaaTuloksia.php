@@ -1,10 +1,11 @@
 <?php
-
+require "libs/tietokantayhteys.php";
 require "libs/common.php";
 require "models/nostaja.php";
 require "models/kilpailu.php";
 require "models/kilpailu_nostaja.php";
 require "models/nosto.php";
+require "models/painoluokka.php";
 
 if (!onkoKirjauduttu()) {
     naytaNakyma('login');

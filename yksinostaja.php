@@ -9,5 +9,8 @@ $id = (int)$_GET['hnro'];
 $nostaja = nostaja::haeNostajaNumerolla($id);
 $tempaukset = nosto::haeNostajanNostotLajissa($id, "tempaus");
 $tyonnot = nosto::haeNostajanNostotLajissa($id, "tyonto");
+$kilpailut = $nostaja->haeKilpailut();
 
-naytaNakyma('yksinostaja',array('nostaja'=>$nostaja, 'tempaukset'=>$tempaukset, 'tyonnot'=>$tyonnot));
+
+naytaNakyma('yksinostaja',array('nostaja'=>$nostaja, 'tempaukset'=>$tempaukset,
+    'tyonnot'=>$tyonnot, 'kilpailut'=>$kilpailut));

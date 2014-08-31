@@ -12,17 +12,26 @@
         
         <label for="inputseura" class="col-md-2 control-label">Seura</label>
         <div class="col-md-10">
-            <input type="text" class="form-control" id="inputseura" name="seura" placeholder='Joku seura'>
+            <input type="text" class="form-control" id="inputseura" name="seura"
+                   <?php if (empty($data['seura'])) { echo "placeholder='Joku seura'"; }
+                   else { echo " value='".$data['seura']."' "; } ?>>
+                   
         </div>
         
         <label for="inputsyntyvuosi" class="col-md-2 control-label">Syntymävuosi</label>
         <div class="col-md-10">
-            <input type="date" class="form-control" id="inputsyntymavuosi" name="syntymavuosi" placeholder='Esim. 1989'>
+            <input type="date" class="form-control" id="inputsyntymavuosi" name="syntymavuosi"
+                   <?php if (empty($data['svuosi'])) { echo "placeholder='Syntymavuosi, esim. 1989'"; }
+                   else { echo " value='".$data['svuosi']."' "; } ?>>
         </div>
         
         <label for="inputkansalaisuus" class="col-md-2 control-label">Kansalaisuus</label>
         <div class="col-md-10">
-            <input type="text" class="form-control" id="inputkanlaisuus" name="kansallisuus" placeholder='Suomi'>
+            <input type="text" class="form-control" id="inputkansallisuus" name="kansallisuus"
+                   <?php if (empty($data['kansallisuus'])) { echo "placeholder='Kansallisuus, esim. Suomi'"; }
+                   else { echo " value='".$data['kansallisuus']."' "; }
+                   ?>                  
+                   >
         </div>    
         
         <label for="inputsukupuoli" class="col-md-2 control-label">Sukupuoli</label>

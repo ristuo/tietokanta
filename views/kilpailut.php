@@ -28,12 +28,26 @@
                 echo "<td>".$kilpailu->getTaso()."</td>";
                 echo "<td>".$kilpailu->getPaivamaara()."</td>";
                 echo "<td>".$kilpailu->getPaikka()."</td>";
+                
+                if (onkoKirjauduttu()) {
+                    echo '<form class="btn" action="muokkaaKilpailua.php" method="POST">';
+                    echo '<input type="hidden" name="kilnro" value='.$kilpailu->getKilnro().'>';
+                    echo '<td><button type="submit" class="btn btn-default">Muokkaa</button></td>';
+                    echo '</form>';
+                }
+                
+                
+                
                 if (onkoKirjauduttu()) {
                     echo '<form class="btn" action="poistaKilpailu.php" method="POST">';
                     echo '<input type="hidden" name="kilnro" value='.$kilpailu->getKilnro().'>';
                     echo '<td><button type="submit" class="btn btn-default">Poista</button></td>';
                     echo '</form>';
                 }
+                
+
+                
+             
                 
                 echo '</tr>';
             } ?>

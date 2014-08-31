@@ -1,4 +1,6 @@
 <?php
+
+
 class kilpailu {
     
     private $kilnro;
@@ -97,19 +99,28 @@ class kilpailu {
     
     public function haeTuloksetPainoluokassa($painoluokka, $sarja) {
 
-        $sql = "select yt, tulokset.hnro, sukupuoli from (select te.tulos+ty.tulos as yt, te.hnro from (select max(tulos) as tulos, hnro from nosto where"
+        $sql = "select yt, tulokset.hnro as hnro, sukupuoli, nostaja.nimi as nimi from (select te.tulos+ty.tulos as yt, te.hnro from (select max(tulos) as tulos, hnro from nosto where"
                 . " kilnro = ".$this->getKilnro()." and laji='tempaus' and "
                 . "painoluokka='".$painoluokka."' group by hnro) as te inner join "
                 . " (select max(tulos) as tulos, hnro from nosto where kilnro = ".$this->getKilnro(). " "
                 . "and painoluokka='".$painoluokka."' and laji='tyonto'"
                 . " group by hnro) as ty on (ty.hnro = te.hnro)) as tulokset inner join "
-                . "nostaja on (tulokset.hnro = nostaja.hnro and sukupuoli='".$sarja."') order by yt ";
+                . "nostaja on (tulokset.hnro = nostaja.hnro and sukupuoli='".$sarja."') order by yt desc ";
         $kysely = getTietokantayhteys()->prepare($sql);
         $kysely->execute();
+        $tulos = $kysely->fetchAll(PDO::FETCH_OBJ);
+        return $tulos;        
     }
         
         
+    public function muokkaa() {
+        $sql = "UPDATE kilpailu SET nimi=?, paikka=?, paivamaara=?, taso=? where kilnro = ".$this->getKilnro();
+        $kysely = getTietokantayhteys()->prepare($sql);
+        return $kysely->execute(array($this->getNimi(),$this->getPaikka(),$this->getPaivamaara(),$this->getTaso()));
         
+        
+        
+    }
         
     
     

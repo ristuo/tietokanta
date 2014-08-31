@@ -1,8 +1,8 @@
 <?php
-
+require 'libs/tietokantayhteys.php';
 require "libs/common.php";
 require "models/kilpailu.php";
-require 'libs/tietokantayhteys.php';
+
 
 $kilnro = $_POST['kilnro'];
 $poistettava = new kilpailu();
