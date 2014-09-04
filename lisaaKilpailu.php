@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Sivun tarkoitus on mahdollistaa kilpailujen tietojan lisääminen tietokantaan.
+ */
 require "libs/common.php";
 require "models/nostaja.php";
 require "models/kilpailu.php";
@@ -25,13 +27,17 @@ $lisattava->setPaikka($paikka);
 $lisattava->setTaso($taso);
 $lisattava->setPaivamaara($paivamaara);
 
+if ($lisattava->getVirheet()==null) {
+    $lisattava->lisaaKantaan();
+    $_SESSION['ilmoitus']="Lisääminen onnistui!";
+    header('Location: kilpailut.php');
+}
+
+else {
+    naytaNakyma('lisaaKilpailu', array('virhe'=>$lisattava->getVirheet(),'nimi'=>$lisattava->getNimi(),
+        'paikka'=>$lisattava->getPaikka(),'taso'=>$lisattava->getTaso()));
+}
 
 
-
-$lisattava->lisaaKantaan();
-
-
-$_SESSION['ilmoitus']="Lisääminen onnistui!";
-header('Location: kilpailut.php');
 exit();
 

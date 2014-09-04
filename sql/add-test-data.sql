@@ -1,4 +1,4 @@
-insert into nostaja (nimi, syntymapaiva, seura, kansalaisuus, sukupuoli) 
+/*insert into nostaja (nimi, syntymapaiva, seura, kansalaisuus, sukupuoli) 
 values ('Matti Meikäläinen', '1980-08-06', 'Helsingin Herakles', 'Suomi', 'mies');
 
 insert into nostaja (nimi, syntymapaiva, seura, kansalaisuus, sukupuoli)
@@ -36,3 +36,18 @@ values(1,'tempaus', null, 1, '94kg', 3);
 
 insert into seura (nimi, kotipaikka)
 values ('Helsingin Herakles', 'Helsinki');
+*/
+insert into kayttaja(sposti, salasana)
+values ('risto.tuomainen@helsinki.fi', 'kokista');
+
+insert into kayttaja(sposti, salasana)
+values ('joku', 'salasana');
+
+insert into painoluokat values('105+ kg');
+insert into painoluokat values('105 kg');
+insert into painoluokat values('94 kg');
+insert into painoluokat values('85 kg');
+insert into painoluokat values('77 kg');
+insert into painoluokat values('69 kg');
+insert into painoluokat values('62 kg');
+insert into painoluokat values('56 kg');

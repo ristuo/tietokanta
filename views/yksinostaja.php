@@ -13,6 +13,7 @@
             <tr>
                 <th>Nimi</th>
                 <th>Päivämäärä</th>
+                <th>Sija</th>    
             </tr>
         </thead>
         <tbody>
@@ -21,6 +22,9 @@
             <tr>
                 <td><?php echo $kilpailu->nimi; ?></td>
                 <td><?php echo $kilpailu->paivamaara; ?> </td>
+                <?php $kisatulokset = $data['kisatulokset']; ?>
+                <td><?php echo $kisatulokset[$kilpailu->kilnro]; ?> </td>
+               
             </tr>
     <?php endforeach; ?>
         </tbody>

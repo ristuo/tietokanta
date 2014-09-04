@@ -2,7 +2,7 @@ create table nostaja
 (
 hnro serial primary key,
 nimi varchar(100) not null,
-syntymapaiva date,
+syntymavuosi integer,
 seura varchar(50),
 kansalaisuus varchar(20),
 sukupuoli varchar(6) not null
@@ -19,17 +19,17 @@ paikka varchar(25)
 
 create table kilpailu_nostaja
 (
-kilnro bigint not null,
-hnro bigint not null
+kilnro integer references kilpailu(kilnro) on delete cascade,
+hnro integer references nostaja(hnro) on delete cascade
 );
 
 create table nosto
 (
-hnro bigint references nostaja(hnro) on delete cascade,
+hnro integer references nostaja(hnro) on delete cascade,
 laji varchar(50) not null,
 tulos integer,
 kilnro integer references kilpailu(kilnro) on delete cascade,
-painoluokka varchar(20) not null,
+painoluokka varchar(20) references painoluokat(painoluokka) on delete set null,
 jarjestysnumero int
 );
 
@@ -39,4 +39,14 @@ nimi varchar(50) not null,
 kotipaikka varchar(50)
 );
 
+create table kayttaja
+(
+knro serial primary key,
+sposti varchar(50) not null,
+salasana varchar(50) not null
+);
 
+create table painoluokat
+(
+painoluokka varchar(8)
+);

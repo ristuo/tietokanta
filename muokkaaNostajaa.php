@@ -2,11 +2,15 @@
 require 'libs/tietokantayhteys.php';
 require "libs/common.php";
 require "models/nostaja.php";
-
+/**
+ * Sivun avulla muokataan nostajan tietoja.
+ */
 $nostajanid = (int)$_POST['hnro'];
 $muokattavanostaja = nostaja::haeNostajaNumerolla($nostajanid);
 
-//naytaNakyma('testi', array('virhe'=>array('virhe3'=>$uudettiedot->getHnro())));
+/**
+ * Jos käyttäjä ei ole antanut mitään tietoja, näytetään oletussivu.
+ */
 if (empty($_POST['nimi'])) {
     naytaNakyma('muokkaaNostajaa', array('nimi'=>$muokattavanostaja->getNimi(),
             'hnro'=>$muokattavanostaja->getHnro(), 'sukupuoli'=>$muokattavanostaja->getSukupuoli(),
@@ -22,6 +26,10 @@ $uudettiedot->setSukupuoli($_POST['sukupuoli']);
 $uudettiedot->setSvuosi($_POST['syntymavuosi']);
 $uudettiedot->setKansallisuus($_POST['kansallisuus']);
 
+/**
+ * Mikäli annetut tiedot sisältävät virheellisiä arvoja, näytetään uudestaa muokkaussivu, jolle
+ * laitetaan ne tiedot, jotka olivat kelvollisia.
+ */
 if ($uudettiedot->getVirheet()!=null) {
     naytaNakyma('muokkaaNostajaa', array('virhe'=> $uudettiedot->getVirheet(),
         'hnro'=>$nostajanid, 'sukupuoli'=>$uudettiedot->getSukupuoli(), 'seura'=>$uudettiedot->getSeura(),

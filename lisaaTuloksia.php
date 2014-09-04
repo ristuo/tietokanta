@@ -6,11 +6,15 @@ require "models/kilpailu.php";
 require "models/kilpailu_nostaja.php";
 require "models/nosto.php";
 require "models/painoluokka.php";
-
+/**
+ * Jos käyttäjä ei ole kirjautunut, näytetään login ruutu.
+ */
 if (!onkoKirjauduttu()) {
     naytaNakyma('login');
 }
-
+/**
+ * Jos mitään tietoja ei ole submitattu lomakkeella, näytetään oletussivu.
+ */
 if (empty($_POST['1tempaus']) && empty($_POST['2tempaus']) && empty($_POST['3tempaus']) && empty($_POST['kilnro'])
         && empty($_POST['hnro']) && empty($_POST['painoluokka']) && empty($_POST['1tyonto']) && empty($_POST['2tyonto'])
         && empty($_POST['3tyonto'])) {
@@ -22,7 +26,9 @@ $tempausTulokset=array();
 $tyontoTulokset=array();
 $kelvollisetTempausTulokset = array();
 $kelvollisetTyontoTulokset = array();
-
+/**
+ * Tallennetaan tulokset kahteen arrayhin.
+ */
 $tempausTulokset[1] = $_POST['1tempaus'];
 $tempausTulokset[2] = $_POST['2tempaus'];
 $tempausTulokset[3] = $_POST['3tempaus'];
@@ -46,7 +52,10 @@ for ($i = 1; $i <=3; $i++) {
     }
 else { $kelvollisetTyontoTulokset[$i]=$tyontoTulokset[$i]; };
 }
-
+/**
+ * Jos virheitä ei ole tapahtunut, lisätään tulokset kantaan. Tulokset ovat
+ * taulukkoina, jotka käydään molemmat yksitellen läpi.
+ */
 if (empty($virhe)) {
     
     $kn = new kilpailu_nostaja();

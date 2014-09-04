@@ -1,7 +1,12 @@
 <?php
 
+/**
+ * Luokka mallintaa nostajien tietoja. 
+ */
+
 class nostaja {
 
+    
     private $nimi;
     private $kansallisuus;
     private $seura;
@@ -20,6 +25,11 @@ class nostaja {
         $this->virheet = array();
     }
     
+    /**
+     * Aseta nimi. Nimeksi ei hyväksytä tyhjää, yli sadan merkin merkkijonoa tai 
+     * merkkijonoa, joka sisältää numeroita.
+     * @param type $nimi
+     */
     public function setNimi($nimi){
         
         
@@ -42,6 +52,11 @@ class nostaja {
         }
     }
     
+    /**
+     * Aseta kansallisuus. Kansallisuudessa ei voi olla numeroita, eikä merkkijono
+     * voi olla yli 30 merkkiä pitkä.
+     * @param type $kansallisuus
+     */
     public function setKansallisuus($kansallisuus) {
         
         if (strlen($kansallisuus)>30) {
@@ -58,6 +73,10 @@ class nostaja {
         }
     }
     
+    /**
+     * Aseta seura. Seura ei voi olla yli 50 merkkiä pitkä.
+     * @param type $seura
+     */
     public function setSeura($seura) {
         
         if (strlen($this->seura)>50) {
@@ -74,6 +93,10 @@ class nostaja {
         
     }
 
+    /**
+     * Aseta vuosi. Vuosi ei voi sisältää kirjaimia.
+     * @param type $svuosi
+     */
     public function setSvuosi($svuosi) {
         /*
         if (!preg_match("/^[0-9]{4}-[0-12]-[0-31]$/", $svuosi)) {
@@ -124,17 +147,22 @@ class nostaja {
     }
     
     
-
+    /**
+     * Toteutakysely. Ajatuksena oli välttää copypastekoodia metodilla. Se ei kuitenkaan 
+     * välttämättä ollut paras mahdollinen ajatus.
+     * @param type $sql
+     * @return type
+     */
     function toteutaKysely($sql) {
         $kysely = getTietokantayhteys()->prepare($sql);
         $kysely->execute();
         return $kysely->fetchAll(PDO::FETCH_OBJ);
     }
     
-    public static function test() {
-        
-    }
-    
+    /**
+     * Hae kaikki nostajat.
+     * @return null|nostajan
+     */
     public static function haeKaikkiNostajat() {
         $sql = "select hnro, nimi, kansalaisuus, seura, syntymavuosi, sukupuoli from nostaja";
         $tulos = nostaja::toteutaKysely($sql); 
@@ -146,7 +174,12 @@ class nostaja {
     }
 
     
-
+    /**
+     * Jälleen tarkoitus oli pyrkiä eroon copypastekoodista, tämän tosin tein ennen
+     * kuin huomasin, että object-listaa voi käsitellä yhtä hyvin kuin listaa nostajista.
+     * @param type $aineisto
+     * @return \nostaja
+     */
     function muodostaArray($aineisto) {
         $palautettava = array();
         
@@ -177,7 +210,11 @@ class nostaja {
     }
 
     
-
+/**
+ * Hae nostaja numerolla. Metodi palauttaa nostaja-olion.
+ * @param int $hnro
+ * @return \nostaja|null
+ */
     public static function haeNostajaNumerolla($hnro) {
         $sql = "select hnro, nimi, kansalaisuus,"
                 . " seura, syntymavuosi,"
@@ -235,6 +272,11 @@ class nostaja {
     }
 
     
+    /**
+     * Metodi hakee kaikki nostajat, joiden nimi täsmää hakuparametriin.
+     * @param type $nimi
+     * @return null
+     */
     public static function haeNostajatNimella($nimi) {
         $sql = "select hnro, nimi, kansalaisuus,"
                 . " seura, syntymavuosi,"
@@ -273,26 +315,47 @@ class nostaja {
   
         return $tulos;
     }
-        
+  
     public function haeKilpailut() {
         $sql = "SELECT * FROM kilpailu WHERE kilnro in"
-                . " (select kilnro from kilpailu_nostaja where hnro = ".$this->getHnro().")";
+                . " (select kilnro from kilpailu_nostaja where hnro = ".$this->getHnro().") order by paivamaara";
         $kysely = getTietokantayhteys()->prepare($sql);
         $kysely->execute();
         return $kysely->fetchAll(PDO::FETCH_OBJ);
     }
 
+
     
+    /**
+     * Hae nostajan sijoitus kilpailussa. Metodi kertoo nostajan sijoituksen tietyssä
+     * kilpailussa.
+     * @param int $kilnro Halutun kilpailun numero
+     * @return null
+     */
     public function nostajanSijoitusKilpailussa($kilnro) {
-        $sql = "select yt, tulokset.hnro as hnro, sukupuoli, nostaja.nimi as nimi"
-                . " from (select te.tulos+ty.tulos as yt, te.hnro"
-                . " from (select max(tulos) as tulos, hnro from nosto where"
-                . " kilnro = ".$kilnro." and laji='tempaus' and "
-                . "painoluokka='".$painoluokka."' group by hnro) as te inner join "
-                . " (select max(tulos) as tulos, hnro from nosto where kilnro = ".$this->getKilnro(). " "
-                . "and painoluokka='".$painoluokka."' and laji='tyonto'"
-                . " group by hnro) as ty on (ty.hnro = te.hnro)) as tulokset inner join "
-                . "nostaja on (tulokset.hnro = nostaja.hnro and sukupuoli='".$sarja."') order by yt desc ";
+        
+        $sql = "select * from (select yt, tulokset.hnro as hnro, sukupuoli, nostaja.nimi as nimi
+                , row_number() over (order by yt desc nulls last) as sija
+                from (select te.tulos+ty.tulos as yt, te.hnro
+                from (select max(tulos) as tulos, hnro, painoluokka from nosto where
+                kilnro=".$kilnro." and laji='tempaus' and painoluokka in"
+                . " (select painoluokka from nosto where hnro=".$this->getHnro()." and kilnro=".$kilnro.") group by hnro, painoluokka) as te
+                inner join (select max(tulos) as tulos, hnro, painoluokka from nosto where kilnro=".$kilnro."
+                and laji='tyonto' group by hnro, painoluokka) as ty on
+                (ty.hnro=te.hnro and te.painoluokka = ty.painoluokka)) as tulokset inner join nostaja on (tulokset.hnro=nostaja.hnro and sukupuoli='mies') order by yt desc) as t
+                where hnro=".$this->getHnro().";";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $kysely->execute();
+        $tulos = $kysely->fetchObject();
+        if (empty($tulos)) {
+            return null;
+        }
+        
+        else { return $tulos; }
+        
     }
+    
+    
+        
     
 }
